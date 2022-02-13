@@ -1,0 +1,62 @@
+"*":
+  core:
+    disabledPackages: [
+      "about"
+      "autocomplete-css"
+      "autocomplete-html"
+      "autocomplete-plus"
+      "autocomplete-snippets"
+      "background-tips"
+      "deprecation-cop"
+      "dev-live-reload"
+      "encoding-selector"
+      "exception-reporting"
+      "image-view"
+      "language-c"
+      "language-clojure"
+      "language-coffee-script"
+      "language-csharp"
+      "language-css"
+      "language-go"
+      "language-html"
+      "language-java"
+      "language-javascript"
+      "language-less"
+      "language-make"
+      "language-mustache"
+      "language-objective-c"
+      "language-perl"
+      "language-php"
+      "language-property-list"
+      "language-python"
+      "language-ruby"
+      "language-ruby-on-rails"
+      "language-rust-bundled"
+      "language-sass"
+      "language-shellscript"
+      "language-sql"
+      "language-todo"
+      "language-toml"
+      "language-typescript"
+      "language-xml"
+      "metrics"
+      "package-generator"
+      "spell-check"
+      "styleguide"
+      "symbols-view"
+      "timecop"
+      "welcome"
+      "wrap-guide"
+    ]
+    telemetryConsent: "no"
+    themes: [
+      "one-dark-ui"
+      "whispers-dark-syntax"
+    ]
+  editor:
+    defaultFontSize: 16
+    fontSize: 16
+    softWrap: true
+    softWrapAtPreferredLineLength: true
+  "markdown-preview":
+    breakOnSingleNewline: true

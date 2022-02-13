@@ -1,0 +1,24 @@
+on: [push,pull_request]
+
+jobs:
+  hello_world_job:
+    runs-on: ubuntu-latest
+    name: Convert Scripts
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
+        with:
+          repository: infinite-whys/whispers-scripts
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - run: npm install
+      - name: Converting scripts to json
+        run: npm start
+      - name: Archive json artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: All json files
+          path: |
+            scripts/**/*.json
+      
