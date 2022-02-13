@@ -8,13 +8,15 @@ jobs:
       - uses: actions/checkout@v2
       - run: |
           cd $GITHUB_WORKSPACE/../
-          cp -r whispers-script-starter scripts
+          mkdir scripts
+          cp -r whispers-script-starter scripts/story
       - uses: actions/checkout@v2
         with:
           repository: infinite-whys/whispers-scripts
           token: ${{ secrets.BOT_PAT }}
       - run: |
           rm -rf $GITHUB_WORKSPACE/scripts
+          cd $GITHUB_WORKSPACE
           mv $GITHUB_WORKSPACE/../scripts $GITHUB_WORKSPACE/
       - uses: actions/setup-node@v2
         with:
