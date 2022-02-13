@@ -6,10 +6,16 @@ jobs:
     name: Convert Scripts
     steps:
       - uses: actions/checkout@v2
+      - run: |
+          cd $GITHUB_WORKSPACE/../
+          mv whispers-script-starter scripts
       - uses: actions/checkout@v2
         with:
           repository: infinite-whys/whispers-scripts
           token: ${{ secrets.BOT_PAT }}
+      - run: |
+          rm -rf $GITHUB_WORKSPACE/scripts
+          mv $GITHUB_WORKSPACE/../scripts $GITHUB_WORKSPACE/
       - uses: actions/setup-node@v2
         with:
           node-version: '16'
