@@ -9,7 +9,7 @@ jobs:
       - run: |
           cd $GITHUB_WORKSPACE/../
           mkdir scripts
-          cp -r whispers-script-starter scripts/story
+          cp -r $GITHUB_WORKSPACE scripts/story
       - uses: actions/checkout@v2
         with:
           repository: infinite-whys/whispers-scripts
@@ -30,4 +30,9 @@ jobs:
           name: All json files
           path: |
             scripts/**/*.json
-      
+      - name: Updating sheets in Google Cloud Storage
+        run: npm run sheets2tsv
+        env:
+          GCP_KEY: ${{ secrets.GCP_KEY }}
+          GCP_ID: ${{ secrets.GCP_ID }}
+          SCRIPT_KEY: ${{ secrets.SCRIPT_KEY }}
