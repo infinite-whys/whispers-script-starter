@@ -36,3 +36,4 @@ jobs:
           GCP_KEY: ${{ secrets.GCP_KEY }}
           GCP_ID: ${{ secrets.GCP_ID }}
           SCRIPT_KEY: ${{ secrets.SCRIPT_KEY }}
+          SHEET_ID: ${{ secrets.SHEET_ID }}
