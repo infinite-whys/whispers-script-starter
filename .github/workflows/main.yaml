@@ -24,6 +24,12 @@ jobs:
       - run: npm install
       - name: Converting scripts to json
         run: npm start
+        env:
+          GCP_KEY: ${{ secrets.GCP_KEY }}
+          GCP_ID: ${{ secrets.GCP_ID }}
+          SCRIPT_KEY: ${{ secrets.SCRIPT_KEY }}
+          SHEET_ID: ${{ secrets.SHEET_ID }}
+          SCRIPT_NAME: ${{ secrets.SCRIPT_NAME }}
       - name: Archive json artifacts
         uses: actions/upload-artifact@v2
         with:
@@ -37,3 +43,4 @@ jobs:
           GCP_ID: ${{ secrets.GCP_ID }}
           SCRIPT_KEY: ${{ secrets.SCRIPT_KEY }}
           SHEET_ID: ${{ secrets.SHEET_ID }}
+          SCRIPT_NAME: ${{ secrets.SCRIPT_NAME }}
