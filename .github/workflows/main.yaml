@@ -5,12 +5,12 @@ jobs:
     runs-on: ubuntu-latest
     name: Convert Scripts
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: |
           cd $GITHUB_WORKSPACE/../
           mkdir scripts
           cp -r $GITHUB_WORKSPACE scripts/story
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           repository: infinite-whys/whispers-scripts
           token: ${{ secrets.BOT_PAT }}
@@ -30,12 +30,6 @@ jobs:
           SCRIPT_KEY: ${{ secrets.SCRIPT_KEY }}
           SHEET_ID: ${{ secrets.SHEET_ID }}
           SCRIPT_NAME: ${{ secrets.SCRIPT_NAME }}
-      - name: Archive json artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: All json files
-          path: |
-            scripts/**/*.json
       - name: Updating sheets in Google Cloud Storage
         run: npm run sheets2tsv
         env:
@@ -44,3 +38,33 @@ jobs:
           SCRIPT_KEY: ${{ secrets.SCRIPT_KEY }}
           SHEET_ID: ${{ secrets.SHEET_ID }}
           SCRIPT_NAME: ${{ secrets.SCRIPT_NAME }}
+      - name: Move generated files
+        run: |
+          mv $GITHUB_WORKSPACE/scripts/story/json $GITHUB_WORKSPACE/../
+          mv $GITHUB_WORKSPACE/scripts/story/tsv $GITHUB_WORKSPACE/../
+      - uses: actions/checkout@v3
+        with:
+          repository: ${{vars.GITHUB_ACTION_REPOSITORY}}
+      - name: Commit report
+        run: |
+          rsync -a $GITHUB_WORKSPACE/../json $GITHUB_WORKSPACE/
+          rsync -a $GITHUB_WORKSPACE/../tsv $GITHUB_WORKSPACE/
+          git config --global user.email "dev@infinite-y.com"
+          git config --global user.name "Github Actions"
+          git add $GITHUB_WORKSPACE/json
+          git add $GITHUB_WORKSPACE/tsv
+          git commit -am "Checking in JSON and TSV files"
+          git push
+      - name: Archive json artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: Generated files
+          path: |
+            json/*.json
+            tsv/*.tsv
+      - name: Discord notification
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        uses: Ilshidur/action-discord@master
+        with:
+          args: 'The scripts of ${{ secrets.SCRIPT_NAME }} have been updated in dev'
